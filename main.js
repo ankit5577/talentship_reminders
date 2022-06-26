@@ -27,6 +27,7 @@ app.use(function (req, res, next) {
 const port = process.env.PORT || 9876;
 
 app.use(express.static(path.join(__dirname, "/app/dist")));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/app/dist/index.html"));
 });
@@ -35,6 +36,7 @@ app.get("/phone", (req, res) => {
   console.log("Message = " + req.query.message);
   console.log("Number = " + req.query.number);
   console.log("Subject = " + req.query.subject, "\n");
+
   var params = {
     Message: req.query.message,
     PhoneNumber: "+" + req.query.number,
@@ -45,6 +47,7 @@ app.get("/phone", (req, res) => {
       },
     },
   };
+  
   let sns = new AWS.SNS({ apiVersion: "2010-03-31" });
 
   sns.publish(params, (err, data) => {
